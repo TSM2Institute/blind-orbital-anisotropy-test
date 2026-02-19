@@ -1,0 +1,148 @@
+{
+  "test_name": "Blind Orbital Anisotropy Test (BOAT)",
+  "institution": "TSM2 Institute for Cosmology Ltd",
+  "execution_time": "2026-02-19T10:41:53.152166+00:00",
+  "mode": "synthetic",
+  "manifest_constants": {
+    "v_obs_km_s": 370.0,
+    "cst_period_gyr": 284.0,
+    "cog_x_ra_deg": 347.75,
+    "cog_x_dec_deg": 66.0,
+    "cmb_dipole_ra_deg": 167.7866,
+    "cmb_dipole_dec_deg": -7.1454,
+    "r_obs_mly": 55.783674792816086,
+    "beta_obs": 0.0012341871522331626,
+    "correlation_threshold": 0.01,
+    "p_value_threshold": 0.01,
+    "n_datasets": 5,
+    "pass_required": 3,
+    "n_decoy_axes": 10,
+    "z_min": 0.01,
+    "z_max": 0.5,
+    "galactic_mask_deg": 10,
+    "min_sample_size": 1000,
+    "dataset_selection_seed": 20260219,
+    "decoy_axes_seed": 20260219
+  },
+  "datasets_tested": 2,
+  "n_pass": 0,
+  "n_fail": 2,
+  "pass_required": 3,
+  "overall_verdict": "FAIL",
+  "per_dataset_results": [
+    {
+      "dataset_name": "synthetic_uniform",
+      "n_objects": 41297,
+      "z_obs_mean": 0.2551666887098609,
+      "z_model_range": [
+        -0.0012333143139581226,
+        0.0012349119633701111
+      ],
+      "true_r": -0.00025414837605976915,
+      "true_p": 0.9588110724297232,
+      "true_amplitude": -6.019493960202084e-05,
+      "true_rms": 0.14113369969037487,
+      "true_dq_significant": [],
+      "decoy_r_values": [
+        -0.001352549377197212,
+        0.0043020030595948885,
+        4.241911427384416e-05,
+        0.0017362631117163354,
+        0.004208629011767518,
+        -0.003078679495399772,
+        0.0024924699507719483,
+        0.001422931026866604,
+        -0.004283695376415982,
+        -0.004095452409847227
+      ],
+      "decoy_p_values": [
+        0.7834296871266694,
+        0.3820005469942494,
+        0.9931223133483327,
+        0.7242180435352193,
+        0.3924175670788103,
+        0.5315632813379457,
+        0.6125079307989306,
+        0.7724630370828697,
+        0.3840295158124707,
+        0.40527216491676293
+      ],
+      "true_rank": 10,
+      "total_axes": 11,
+      "passes_r_threshold": "False",
+      "passes_p_threshold": "False",
+      "passes_rank": false,
+      "VERDICT": "FAIL",
+      "filter_stats": {
+        "source": "synthetic_uniform",
+        "n_raw": 50000,
+        "n_after_coord_cut": 50000,
+        "n_after_z_cut": 50000,
+        "n_after_gal_cut": 41297,
+        "n_after_dedup": 41297,
+        "passes_min_size": true,
+        "n_final": 41297
+      },
+      "dataset_hash": "77881db3ad087e5c0512a6d65f96cd59a5a3383ab661af469c28968a402f2517"
+    },
+    {
+      "dataset_name": "synthetic_dipole",
+      "n_objects": 41225,
+      "z_obs_mean": 0.25493112508329346,
+      "z_model_range": [
+        -0.0012334113353185128,
+        0.0012348809511066872
+      ],
+      "true_r": -0.0099675361836147,
+      "true_p": 0.04299160716958314,
+      "true_amplitude": -0.0023557502424728836,
+      "true_rms": 0.1406813574605742,
+      "true_dq_significant": [],
+      "decoy_r_values": [
+        0.0019132646658431124,
+        -0.007146097712093645,
+        -0.005170071017597136,
+        -0.010180143194961029,
+        -0.00392944013895992,
+        -0.002975876679302916,
+        -0.003840890275347649,
+        -0.009206592958729318,
+        -0.002687680787598106,
+        -0.0033720811582995166
+      ],
+      "decoy_p_values": [
+        0.6976780945043841,
+        0.14680382115224203,
+        0.29385453301183406,
+        0.0387378198170537,
+        0.42498071324407577,
+        0.5457085223980306,
+        0.43549017673673956,
+        0.06158330070920307,
+        0.5852793586302966,
+        0.49356699258895
+      ],
+      "true_rank": 2,
+      "total_axes": 11,
+      "passes_r_threshold": "False",
+      "passes_p_threshold": "False",
+      "passes_rank": false,
+      "VERDICT": "FAIL",
+      "filter_stats": {
+        "source": "synthetic_dipole",
+        "n_raw": 50000,
+        "n_after_coord_cut": 50000,
+        "n_after_z_cut": 49897,
+        "n_after_gal_cut": 41225,
+        "n_after_dedup": 41225,
+        "passes_min_size": true,
+        "n_final": 41225
+      },
+      "dataset_hash": "1db9cdb9c9bca2ba28da78c68b93a1f186759c9cda5c9360436fa201ab5f2f75"
+    }
+  ],
+  "dataset_hashes": {
+    "synthetic_uniform": "77881db3ad087e5c0512a6d65f96cd59a5a3383ab661af469c28968a402f2517",
+    "synthetic_dipole": "1db9cdb9c9bca2ba28da78c68b93a1f186759c9cda5c9360436fa201ab5f2f75"
+  }
+}

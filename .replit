@@ -21,3 +21,26 @@ externalPort = 80
 
 [agent]
 expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Run BOAT"
+
+[[workflows.workflow]]
+name = "Run BOAT"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd /home/runner/workspace && python3 -c \"from boat.runner import run_full_test; run_full_test(mode='synthetic')\""
+
+[workflows.workflow.metadata]
+outputType = "console"
