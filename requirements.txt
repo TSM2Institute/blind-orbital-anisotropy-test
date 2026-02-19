@@ -1,0 +1,10 @@
+numpy
+pandas
+scipy
+astropy
+matplotlib
+astropy
+matplotlib
+numpy
+pandas
+scipy
