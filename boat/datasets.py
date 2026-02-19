@@ -29,6 +29,12 @@ SURVEY_REGISTRY = {
         "n_objects": 50000,
         "injected_amplitude": 0.00124,
     },
+    "6dFGS_DR3": {
+        "description": "6dF Galaxy Survey Data Release 3 (final)",
+        "type": "real",
+        "filepath": "attached_assets/6dFGSzDR3.txt_1771500188269.gz",
+        "n_expected": 124647,
+    },
 }
 
 
@@ -186,6 +192,89 @@ def apply_quality_cuts(df, source_name="unknown"):
     return df, stats
 
 
+def load_6dfgs(filepath='attached_assets/6dFGSzDR3.txt_1771500188269.gz'):
+    """
+    Load 6dF Galaxy Survey DR3 redshift catalogue.
+
+    File format: gzipped space-separated ASCII, 75 header lines starting with #.
+    Key columns (0-indexed):
+        0: target ID
+        1,2,3: RA hours, minutes, seconds (J2000)
+        4,5,6: Dec degrees, arcminutes, arcseconds (J2000)
+        14: best cz (km/s)
+        15: cz uncertainty (km/s)
+        17: redshift quality flag (3 or 4 = reliable for 6dFGS sources)
+        16: source code (126 = 6dFGS)
+        18: galactic latitude
+        19: galactic longitude
+
+    Parameters
+    ----------
+    filepath : str
+        Path to 6dFGSzDR3.txt.gz
+
+    Returns
+    -------
+    pd.DataFrame
+        Columns: ra, dec, z_obs, source
+    """
+    import gzip
+
+    rows = []
+    with gzip.open(filepath, 'rt') as f:
+        for line in f:
+            if line.startswith('#'):
+                continue
+            parts = line.split()
+            if len(parts) < 20:
+                continue
+
+            try:
+                ra_h = float(parts[1])
+                ra_m = float(parts[2])
+                ra_s = float(parts[3])
+                ra_deg = (ra_h + ra_m / 60 + ra_s / 3600) * 15.0
+
+                dec_d = float(parts[4])
+                dec_m = float(parts[5])
+                dec_s = float(parts[6])
+                sign = -1 if dec_d < 0 or parts[4].startswith('-') else 1
+                dec_deg = sign * (abs(dec_d) + dec_m / 60 + dec_s / 3600)
+
+                cz = float(parts[14])
+                cz_err = float(parts[15])
+                source_code = int(parts[16])
+                quality = int(parts[17])
+
+                z_obs = cz / 299792.458
+
+                rows.append({
+                    'ra': ra_deg,
+                    'dec': dec_deg,
+                    'z_obs': z_obs,
+                    'cz_err': cz_err,
+                    'quality': quality,
+                    'source_code': source_code,
+                    'source': '6dFGS_DR3'
+                })
+            except (ValueError, IndexError):
+                continue
+
+    df = pd.DataFrame(rows)
+
+    mask_6df = (df['source_code'] == 126) & (df['quality'].isin([3, 4]))
+    mask_other = df['source_code'] != 126
+    df = df[mask_6df | mask_other].copy()
+
+    df = df[df['z_obs'] > 0].copy()
+
+    print(f"  6dFGS DR3 loaded: {len(df)} galaxies with reliable redshifts")
+    print(f"  z range: [{df['z_obs'].min():.4f}, {df['z_obs'].max():.4f}]")
+    print(f"  Median z: {df['z_obs'].median():.4f}")
+
+    return df[['ra', 'dec', 'z_obs', 'source']].copy()
+
+
 def load_dataset(name, seed=None):
     """
     Load a dataset by name from the registry.
@@ -214,6 +303,12 @@ def load_dataset(name, seed=None):
             info['n_objects'], seed or 42,
             amplitude=info.get('injected_amplitude', 0.00124)
         )
+    elif info['type'] == 'real':
+        filepath = info.get('filepath', '')
+        if '6dFGS' in name or '6dfgs' in name.lower():
+            return load_6dfgs(filepath)
+        else:
+            raise NotImplementedError(f"No loader for real dataset '{name}'")
     else:
         raise NotImplementedError(f"Dataset type '{info['type']}' not yet implemented")
 
