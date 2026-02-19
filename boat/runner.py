@@ -83,7 +83,10 @@ def run_full_test(mode='synthetic'):
         print(f"  DATASET {i+1}/{len(datasets)}: {ds_name}")
         print(f"{'='*70}")
 
-        seed = DATASET_SELECTION_SEED + i
+        if mode == 'synthetic':
+            seed = 42 + i
+        else:
+            seed = DATASET_SELECTION_SEED + i
         df_raw = load_dataset(ds_name, seed=seed)
         print(f"  Raw objects: {len(df_raw)}")
 
