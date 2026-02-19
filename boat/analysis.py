@@ -19,10 +19,13 @@ def compute_residuals(df):
     """
     Compute redshift residuals by removing the isotropic component.
 
-    delta_z_i = z_obs_i - mean(z_obs) - z_model_i
+    delta_z_i = z_obs_i - mean(z_obs)
 
     Subtracting the sample mean removes the dominant Hubble-flow component,
-    isolating the directional (dipole) signal.
+    isolating any directional (dipole) signal in the data.
+
+    z_model is computed for reference/comparison but is NOT subtracted
+    from the data — it represents the predicted signal we're testing for.
 
     Parameters
     ----------
@@ -39,8 +42,7 @@ def compute_residuals(df):
     df['z_model'] = predict_z_model(df['ra'].values, df['dec'].values)
 
     z_mean = df['z_obs'].mean()
-    df['delta_z'] = df['z_obs'] - z_mean - df['z_model']
-    df['z_obs_centered'] = df['z_obs'] - z_mean
+    df['delta_z'] = df['z_obs'] - z_mean
 
     return df
 
