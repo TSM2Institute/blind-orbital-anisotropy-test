@@ -84,7 +84,7 @@ def run_full_test(mode='synthetic'):
         print(f"{'='*70}")
 
         if mode == 'synthetic':
-            seed = 42 + i
+            seed = 42
         else:
             seed = DATASET_SELECTION_SEED + i
         df_raw = load_dataset(ds_name, seed=seed)

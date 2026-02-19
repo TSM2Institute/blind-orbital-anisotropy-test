@@ -1,7 +1,7 @@
 {
   "test_name": "Blind Orbital Anisotropy Test (BOAT)",
   "institution": "TSM2 Institute for Cosmology Ltd",
-  "execution_time": "2026-02-19T10:47:28.014943+00:00",
+  "execution_time": "2026-02-19T10:49:15.030549+00:00",
   "mode": "synthetic",
   "manifest_constants": {
     "v_obs_km_s": 370.0,
@@ -25,8 +25,8 @@
     "decoy_axes_seed": 20260219
   },
   "datasets_tested": 2,
-  "n_pass": 0,
-  "n_fail": 2,
+  "n_pass": 1,
+  "n_fail": 1,
   "pass_required": 3,
   "overall_verdict": "FAIL",
   "per_dataset_results": [
@@ -87,62 +87,64 @@
     },
     {
       "dataset_name": "synthetic_dipole",
-      "n_objects": 41228,
-      "z_obs_mean": 0.2547367159849706,
+      "n_objects": 41272,
+      "z_obs_mean": 0.25604108144274274,
       "z_model_range": [
-        -0.001233346710195815,
-        0.0012348997181612642
+        -0.00123335813785308,
+        0.0012349399365736424
       ],
-      "true_r": 0.0030281363602547135,
-      "true_p": 0.5386629376908862,
-      "true_amplitude": 0.00070998660072826,
-      "true_rms": 0.1404505680649733,
-      "true_dq_significant": [],
+      "true_r": -0.01337425420387679,
+      "true_p": 0.006585922513694716,
+      "true_amplitude": -0.0031755336203454533,
+      "true_rms": 0.1413481408551717,
+      "true_dq_significant": [
+        "dipole"
+      ],
       "decoy_r_values": [
-        -0.00017727446806215433,
-        0.0028597732819896264,
-        0.0020830626974944057,
-        0.0030925866169400156,
-        0.0014053179647943931,
-        0.0008796175461973226,
-        0.0009758784573423069,
-        0.0026420003747382875,
-        0.0002818074721653601,
-        0.00045438707567200794
+        0.0008834724613437732,
+        -0.010339428350189611,
+        -0.008425169164171308,
+        -0.013044239909796805,
+        -0.0045999196103600915,
+        -0.004813526806483618,
+        -0.0037501630747591055,
+        -0.011334546590537307,
+        -0.0032142750549836387,
+        -0.0039537231038724654
       ],
       "decoy_p_values": [
-        0.9712872060873361,
-        0.561475440202906,
-        0.6723340512083501,
-        0.5300548705079642,
-        0.7753861259009436,
-        0.8582532543992826,
-        0.8429331590041087,
-        0.5916583805306722,
-        0.9543712453007261,
-        0.9264922263022254
+        0.8575635312229879,
+        0.035684857993535594,
+        0.0869713803586787,
+        0.008048307376508412,
+        0.3500595298638711,
+        0.3281393022400958,
+        0.44615287278488286,
+        0.02129711816027556,
+        0.513770254333959,
+        0.42186037291251055
       ],
-      "true_rank": 2,
+      "true_rank": 1,
       "total_axes": 11,
-      "passes_r_threshold": "False",
-      "passes_p_threshold": "False",
-      "passes_rank": false,
-      "VERDICT": "FAIL",
+      "passes_r_threshold": "True",
+      "passes_p_threshold": "True",
+      "passes_rank": true,
+      "VERDICT": "PASS",
       "filter_stats": {
         "source": "synthetic_dipole",
         "n_raw": 50000,
         "n_after_coord_cut": 50000,
-        "n_after_z_cut": 49895,
-        "n_after_gal_cut": 41228,
-        "n_after_dedup": 41228,
+        "n_after_z_cut": 49907,
+        "n_after_gal_cut": 41272,
+        "n_after_dedup": 41272,
         "passes_min_size": true,
-        "n_final": 41228
+        "n_final": 41272
       },
-      "dataset_hash": "0b82bcb42d1b240154254e7c975d9e4c7439dea883e159e16733504ef5505936"
+      "dataset_hash": "81304dd694fcebf9e6e66e92fad9e473537cc603c54ff9737bf7463ee95013d1"
     }
   ],
   "dataset_hashes": {
     "synthetic_uniform": "d40befe928aab97f1abff5765a209a3fb011def047aa31c1440b0e051ca62eea",
-    "synthetic_dipole": "0b82bcb42d1b240154254e7c975d9e4c7439dea883e159e16733504ef5505936"
+    "synthetic_dipole": "81304dd694fcebf9e6e66e92fad9e473537cc603c54ff9737bf7463ee95013d1"
   }
 }
