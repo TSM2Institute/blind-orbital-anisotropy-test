@@ -35,6 +35,12 @@ SURVEY_REGISTRY = {
         "filepath": "attached_assets/6dFGSzDR3.txt_1771500188269.gz",
         "n_expected": 124647,
     },
+    "2dFGRS": {
+        "description": "2dF Galaxy Redshift Survey (final release)",
+        "type": "real",
+        "filepath": "attached_assets/best.observations.idz_1771582454022.gz",
+        "n_expected": 245591,
+    },
 }
 
 
@@ -275,6 +281,81 @@ def load_6dfgs(filepath='attached_assets/6dFGSzDR3.txt_1771500188269.gz'):
     return df[['ra', 'dec', 'z_obs', 'source']].copy()
 
 
+def load_2dfgrs(filepath='attached_assets/best.observations.idz_1771582454022.gz'):
+    """
+    Load 2dF Galaxy Redshift Survey final catalogue.
+
+    File format: gzipped ASCII, 35 whitespace-delimited fields.
+    Key columns (0-indexed):
+        4,5,6: RA J2000 (h, m, s)
+        7,8,9: Dec J2000 (d, arcmin, arcsec)
+        28: Best redshift
+        29: Quality of best redshift (>=3 reliable)
+
+    Sentinel values: -9.999x = missing data
+
+    Parameters
+    ----------
+    filepath : str
+        Path to best.observations.idz.gz
+
+    Returns
+    -------
+    pd.DataFrame
+        Columns: ra, dec, z_obs, source
+    """
+    import gzip
+
+    rows = []
+    with gzip.open(filepath, 'rt') as f:
+        for line in f:
+            parts = line.split()
+            if len(parts) < 30:
+                continue
+
+            try:
+                ra_h = float(parts[4])
+                ra_m = float(parts[5])
+                ra_s = float(parts[6])
+                ra_deg = (ra_h + ra_m / 60 + ra_s / 3600) * 15.0
+
+                dec_d = float(parts[7])
+                dec_m = float(parts[8])
+                dec_s = float(parts[9])
+                sign = -1 if dec_d < 0 or parts[7].startswith('-') else 1
+                dec_deg = sign * (abs(dec_d) + dec_m / 60 + dec_s / 3600)
+
+                z_best = float(parts[28])
+                quality = float(parts[29])
+
+                if z_best < -9 or quality < 0:
+                    continue
+
+                if quality < 3:
+                    continue
+
+                if z_best <= 0:
+                    continue
+
+                rows.append({
+                    'ra': ra_deg,
+                    'dec': dec_deg,
+                    'z_obs': z_best,
+                    'quality': int(quality),
+                    'source': '2dFGRS'
+                })
+            except (ValueError, IndexError):
+                continue
+
+    df = pd.DataFrame(rows)
+
+    print(f"  2dFGRS loaded: {len(df)} galaxies with reliable redshifts (quality >= 3)")
+    print(f"  z range: [{df['z_obs'].min():.4f}, {df['z_obs'].max():.4f}]")
+    print(f"  Median z: {df['z_obs'].median():.4f}")
+
+    return df[['ra', 'dec', 'z_obs', 'source']].copy()
+
+
 def load_dataset(name, seed=None):
     """
     Load a dataset by name from the registry.
@@ -307,6 +388,8 @@ def load_dataset(name, seed=None):
         filepath = info.get('filepath', '')
         if '6dFGS' in name or '6dfgs' in name.lower():
             return load_6dfgs(filepath)
+        elif '2dFGRS' in name or '2dfgrs' in name.lower():
+            return load_2dfgrs(filepath)
         else:
             raise NotImplementedError(f"No loader for real dataset '{name}'")
     else:
