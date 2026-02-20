@@ -47,6 +47,12 @@ SURVEY_REGISTRY = {
         "filepath": "attached_assets/SpecObjv27_1771583256206.fits",
         "n_expected": 344905,
     },
+    "2MRS": {
+        "description": "2MASS Redshift Survey (Huchra+ 2012)",
+        "type": "real",
+        "filepath": "attached_assets/asu_1771586798714.tsv",
+        "n_expected": 44599,
+    },
 }
 
 
@@ -362,6 +368,98 @@ def load_2dfgrs(filepath='attached_assets/best.observations.idz_1771582454022.gz
     return df[['ra', 'dec', 'z_obs', 'source']].copy()
 
 
+def load_2mrs(filepath='attached_assets/asu_1771586798714.tsv'):
+    """
+    Load 2MASS Redshift Survey (2MRS) from VizieR TSV export.
+
+    Parses table3 only (main catalogue, ~44,599 galaxies).
+    Tab-separated, column headers at line 66, data from line 69.
+
+    Key columns: RAJ2000 (deg), DEJ2000 (deg), cz (km/s heliocentric)
+    z_obs = cz / c
+
+    Parameters
+    ----------
+    filepath : str
+        Path to the VizieR TSV file
+
+    Returns
+    -------
+    pd.DataFrame
+        Columns: ra, dec, z_obs, source
+    """
+    rows = []
+    in_table3 = False
+    headers = None
+    past_separator = False
+
+    with open(filepath, 'r') as f:
+        for line in f:
+            stripped = line.strip()
+
+            if 'J/ApJS/199/26/table3' in stripped:
+                in_table3 = True
+                past_separator = False
+                continue
+
+            if in_table3 and stripped.startswith('#') and 'J/ApJS/199/26/' in stripped and 'table3' not in stripped:
+                break
+
+            if not in_table3:
+                continue
+
+            if stripped.startswith('#'):
+                continue
+
+            if headers is None and not stripped.startswith('-') and stripped:
+                headers = stripped.split('\t')
+                headers = [h.strip() for h in headers]
+                continue
+
+            if not past_separator:
+                if stripped.startswith('-'):
+                    past_separator = True
+                continue
+
+            if not stripped:
+                continue
+
+            parts = stripped.split('\t')
+
+            try:
+                ra_idx = headers.index('RAJ2000') if 'RAJ2000' in headers else None
+                dec_idx = headers.index('DEJ2000') if 'DEJ2000' in headers else None
+                cz_idx = headers.index('cz') if 'cz' in headers else None
+
+                if ra_idx is None or dec_idx is None or cz_idx is None:
+                    continue
+
+                ra = float(parts[ra_idx].strip())
+                dec = float(parts[dec_idx].strip())
+                cz = float(parts[cz_idx].strip())
+
+                z_obs = cz / 299792.458
+
+                rows.append({
+                    'ra': ra,
+                    'dec': dec,
+                    'z_obs': z_obs,
+                    'source': '2MRS'
+                })
+            except (ValueError, IndexError):
+                continue
+
+    df = pd.DataFrame(rows)
+
+    df = df[np.isfinite(df['z_obs']) & np.isfinite(df['ra']) & np.isfinite(df['dec'])].copy()
+
+    print(f"  2MRS loaded: {len(df)} galaxies")
+    print(f"  z range: [{df['z_obs'].min():.4f}, {df['z_obs'].max():.4f}]")
+    print(f"  Median z: {df['z_obs'].median():.4f}")
+
+    return df[['ra', 'dec', 'z_obs', 'source']].copy()
+
+
 def load_gama(filepath='attached_assets/SpecObjv27_1771583256206.fits'):
     """
     Load GAMA DR4 SpecObj catalogue.
@@ -440,6 +538,8 @@ def load_dataset(name, seed=None):
             return load_2dfgrs(filepath)
         elif 'GAMA' in name or 'gama' in name.lower():
             return load_gama(filepath)
+        elif '2MRS' in name or '2mrs' in name.lower():
+            return load_2mrs(filepath)
         else:
             raise NotImplementedError(f"No loader for real dataset '{name}'")
     else:
