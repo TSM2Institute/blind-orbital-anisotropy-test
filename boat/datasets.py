@@ -41,6 +41,12 @@ SURVEY_REGISTRY = {
         "filepath": "attached_assets/best.observations.idz_1771582454022.gz",
         "n_expected": 245591,
     },
+    "GAMA_DR4": {
+        "description": "Galaxy and Mass Assembly DR4 SpecObj",
+        "type": "real",
+        "filepath": "attached_assets/SpecObjv27_1771583256206.fits",
+        "n_expected": 344905,
+    },
 }
 
 
@@ -356,6 +362,48 @@ def load_2dfgrs(filepath='attached_assets/best.observations.idz_1771582454022.gz
     return df[['ra', 'dec', 'z_obs', 'source']].copy()
 
 
+def load_gama(filepath='attached_assets/SpecObjv27_1771583256206.fits'):
+    """
+    Load GAMA DR4 SpecObj catalogue.
+
+    FITS binary table. Columns: RA, DEC (J2000 degrees), Z (redshift),
+    NQ (quality flag, >=3 reliable).
+
+    Parameters
+    ----------
+    filepath : str
+        Path to SpecObj.fits
+
+    Returns
+    -------
+    pd.DataFrame
+        Columns: ra, dec, z_obs, source
+    """
+    from astropy.io import fits
+    from astropy.table import Table
+
+    t = Table.read(filepath, hdu='SpecObj')
+    df = t.to_pandas()
+
+    print(f"  GAMA DR4 raw: {len(df)} rows")
+
+    df = df[df['NQ'] >= 3].copy()
+
+    df = df[df['Z'] > 0].copy()
+    df = df[np.isfinite(df['Z'])].copy()
+
+    df = df[np.isfinite(df['RA']) & np.isfinite(df['DEC'])].copy()
+
+    df = df.rename(columns={'RA': 'ra', 'DEC': 'dec', 'Z': 'z_obs'})
+    df['source'] = 'GAMA_DR4'
+
+    print(f"  GAMA DR4 after quality cuts: {len(df)} galaxies (NQ >= 3)")
+    print(f"  z range: [{df['z_obs'].min():.4f}, {df['z_obs'].max():.4f}]")
+    print(f"  Median z: {df['z_obs'].median():.4f}")
+
+    return df[['ra', 'dec', 'z_obs', 'source']].copy()
+
+
 def load_dataset(name, seed=None):
     """
     Load a dataset by name from the registry.
@@ -390,6 +438,8 @@ def load_dataset(name, seed=None):
             return load_6dfgs(filepath)
         elif '2dFGRS' in name or '2dfgrs' in name.lower():
             return load_2dfgrs(filepath)
+        elif 'GAMA' in name or 'gama' in name.lower():
+            return load_gama(filepath)
         else:
             raise NotImplementedError(f"No loader for real dataset '{name}'")
     else:
