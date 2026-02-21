@@ -1,0 +1,71 @@
+{
+  "version": "BOAT_v2.0_MC",
+  "n_surveys_completed": 2,
+  "n_total_realisations": 200,
+  "mc_base_seed": 42,
+  "decoy_seed": 20260301,
+  "n_decoy_axes": 50,
+  "r_weight_deg": 5.0,
+  "combined_percentiles": {
+    "R_NULL_95": 1.513646,
+    "R_NULL_99": 1.571442,
+    "R_NULL_995": 1.574803
+  },
+  "combined_stats": {
+    "min": 0.005184,
+    "max": 1.57841,
+    "mean": 0.848852,
+    "std": 0.434265
+  },
+  "per_survey": {
+    "6dFGS": {
+      "status": "completed",
+      "n_galaxies": 119906,
+      "sky_fraction": 0.3373148148148148,
+      "median_z": 0.05397567406448898,
+      "n_realisations": 100,
+      "seed": 42,
+      "elapsed_seconds": 8.0,
+      "percentiles": {
+        "p50": 0.914898,
+        "p95": 1.555748,
+        "p99": 1.574821,
+        "p995": 1.576616
+      },
+      "min_ratio": 0.005184,
+      "max_ratio": 1.57841,
+      "mean_ratio": 0.902632,
+      "weight_stats": {
+        "min": 0.261308,
+        "max": 27.533572,
+        "mean": 1.0,
+        "std": 0.562083
+      }
+    },
+    "SDSS": {
+      "status": "completed",
+      "n_galaxies": 1575204,
+      "sky_fraction": 0.2093672839506173,
+      "median_z": 0.2035885,
+      "n_realisations": 100,
+      "seed": 43,
+      "elapsed_seconds": 370.5,
+      "percentiles": {
+        "p50": 0.908921,
+        "p95": 1.39297,
+        "p99": 1.500526,
+        "p995": 1.504431
+      },
+      "min_ratio": 0.009325,
+      "max_ratio": 1.508335,
+      "mean_ratio": 0.795072,
+      "weight_stats": {
+        "min": 0.51907,
+        "max": 8829.906491,
+        "mean": 1.0,
+        "std": 24.36554
+      }
+    }
+  },
+  "sha256": "cb8fea45e909cb8e17941b812748eb770f31ec4a2c0dd58c3bad6498a5300b84"
+}

@@ -38,9 +38,9 @@ args = "Run BOAT"
 name = "Run BOAT"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd /home/runner/workspace && python3 -c \"from boat.runner import run_full_test; run_full_test(mode='synthetic')\""
-
 [workflows.workflow.metadata]
 outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd /home/runner/workspace && python3 run_mc_100.py"
