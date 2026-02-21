@@ -53,6 +53,12 @@ SURVEY_REGISTRY = {
         "filepath": "attached_assets/asu_1771586798714.tsv",
         "n_expected": 44599,
     },
+    "SDSS_DR18": {
+        "description": "Sloan Digital Sky Survey DR18 (CasJobs export)",
+        "type": "real",
+        "filepath": "attached_assets/MyTable_TSM2_0_1771642595705.csv",
+        "n_expected": 1575000,
+    },
 }
 
 
@@ -460,6 +466,50 @@ def load_2mrs(filepath='attached_assets/asu_1771586798714.tsv'):
     return df[['ra', 'dec', 'z_obs', 'source']].copy()
 
 
+def load_sdss(filepath='attached_assets/MyTable_TSM2_0_1771642595705.csv'):
+    """
+    Load SDSS DR18 spectroscopic galaxy catalogue from CasJobs export.
+
+    Pre-filtered in SQL: class='GALAXY', zWarning=0, 0.01 < z < 0.5, zErr < 0.001.
+    CSV format with columns: ra, dec, z_obs, zErr, zWarning, class, subClass.
+
+    Parameters
+    ----------
+    filepath : str
+        Path to the CasJobs CSV export
+
+    Returns
+    -------
+    pd.DataFrame
+        Columns: ra, dec, z_obs, source
+    """
+    df = pd.read_csv(filepath)
+
+    print(f"  SDSS DR18 raw: {len(df)} rows")
+
+    col_map = {}
+    for col in df.columns:
+        cl = col.strip().lower()
+        if cl == 'z_obs' or cl == 'z':
+            col_map[col] = 'z_obs'
+        elif cl == 'ra':
+            col_map[col] = 'ra'
+        elif cl == 'dec':
+            col_map[col] = 'dec'
+    df = df.rename(columns=col_map)
+
+    df = df[np.isfinite(df['z_obs']) & np.isfinite(df['ra']) & np.isfinite(df['dec'])].copy()
+    df = df[df['z_obs'] > 0].copy()
+
+    df['source'] = 'SDSS_DR18'
+
+    print(f"  SDSS DR18 after cleanup: {len(df)} galaxies")
+    print(f"  z range: [{df['z_obs'].min():.4f}, {df['z_obs'].max():.4f}]")
+    print(f"  Median z: {df['z_obs'].median():.4f}")
+
+    return df[['ra', 'dec', 'z_obs', 'source']].copy()
+
+
 def load_gama(filepath='attached_assets/SpecObjv27_1771583256206.fits'):
     """
     Load GAMA DR4 SpecObj catalogue.
@@ -540,6 +590,8 @@ def load_dataset(name, seed=None):
             return load_gama(filepath)
         elif '2MRS' in name or '2mrs' in name.lower():
             return load_2mrs(filepath)
+        elif 'SDSS' in name or 'sdss' in name.lower():
+            return load_sdss(filepath)
         else:
             raise NotImplementedError(f"No loader for real dataset '{name}'")
     else:
