@@ -1,0 +1,15 @@
+{
+  "survey": "6dFGS",
+  "n_galaxies": 119906,
+  "sky_fraction": 0.3373148148148148,
+  "median_z": 0.05397567406448898,
+  "mc_base_seed": 42,
+  "batch_size": 1000,
+  "total_target": 10000,
+  "weight_stats": {
+    "min": 0.26130762807767793,
+    "max": 27.533572179553218,
+    "mean": 1.0,
+    "std": 0.5620831628832785
+  }
+}

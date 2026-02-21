@@ -1,15 +1,11 @@
 """
-Run 100-realisation Monte Carlo calibration on both surveys.
-Saves results to boat/results/mc_calibration_100.json
+Run 6dFGS full 10,000-realisation batch Monte Carlo calibration.
 """
 
-from boat.montecarlo import run_null_calibration, save_mc_results
+from boat.montecarlo import run_mc_batch
 
-results = run_null_calibration(
-    surveys=["6dFGS", "SDSS"],
-    n_realisations=100
-)
-
-save_mc_results(results, filepath="boat/results/mc_calibration_100.json")
-
-print("\n\nDONE — results saved to boat/results/mc_calibration_100.json")
+result_6dfgs = run_mc_batch("6dFGS", batch_size=1000, total_realisations=10000)
+print(f"\n6dFGS complete: {result_6dfgs['n_realisations']:,} realisations")
+print(f"6dFGS p99: {result_6dfgs['percentiles']['p99']:.6f}")
+print(f"6dFGS mean ratio: {result_6dfgs['mean_ratio']:.6f}")
+print("\nDONE")
