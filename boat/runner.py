@@ -174,5 +174,143 @@ def run_full_test(mode='synthetic'):
     return output
 
 
+def run_production_test():
+    """
+    Execute BOAT on all 5 real surveys per the sealed manifest.
+    Generates the immutable results artifact.
+    """
+    os.makedirs(RESULTS_DIR, exist_ok=True)
+
+    print("=" * 70)
+    print("  BLIND ORBITAL ANISOTROPY TEST (BOAT) — PRODUCTION RUN")
+    print("  TSM2 Institute for Cosmology Ltd")
+    print(f"  Execution time: {datetime.now(timezone.utc).isoformat()}")
+    print("  Manifest: v1.1 (sealed 19 February 2026)")
+    print("=" * 70)
+
+    manifest_record = {
+        'v_obs_km_s': V_OBS,
+        'cst_period_gyr': CST_PERIOD_GYR,
+        'cog_x_ra_deg': COG_X_RA_DEG,
+        'cog_x_dec_deg': COG_X_DEC_DEG,
+        'cmb_dipole_ra_deg': CMB_DIPOLE_RA_DEG,
+        'cmb_dipole_dec_deg': CMB_DIPOLE_DEC_DEG,
+        'r_obs_mly': R_OBS_MLY,
+        'beta_obs': BETA_OBS,
+        'correlation_threshold': CORRELATION_THRESHOLD,
+        'p_value_threshold': P_VALUE_THRESHOLD,
+        'n_datasets': N_DATASETS,
+        'pass_required': PASS_REQUIRED,
+        'n_decoy_axes': N_DECOY_AXES,
+        'z_min': Z_MIN,
+        'z_max': Z_MAX,
+        'galactic_mask_deg': GALACTIC_PLANE_MASK_DEG,
+        'min_sample_size': MIN_SAMPLE_SIZE,
+        'dataset_selection_seed': DATASET_SELECTION_SEED,
+        'decoy_axes_seed': DECOY_AXES_SEED,
+    }
+
+    survey_names = ["6dFGS_DR3", "2dFGRS", "GAMA_DR4", "2MRS", "SDSS_DR18"]
+
+    all_results = []
+    dataset_hashes = {}
+
+    for i, ds_name in enumerate(survey_names):
+        print(f"\n{'='*70}")
+        print(f"  DATASET {i+1}/5: {ds_name}")
+        print(f"{'='*70}")
+
+        df_raw = load_dataset(ds_name)
+        print(f"  Raw objects: {len(df_raw)}")
+
+        df_filtered, filter_stats = apply_quality_cuts(df_raw, ds_name)
+        print(f"  After quality cuts: {filter_stats['n_final']}")
+
+        if not filter_stats['passes_min_size']:
+            print(f"  WARNING: Below minimum sample size ({MIN_SAMPLE_SIZE})")
+            result = {
+                'dataset_name': ds_name,
+                'n_objects': filter_stats['n_final'],
+                'VERDICT': 'FAIL',
+                'reason': 'Below minimum sample size',
+                'filter_stats': filter_stats
+            }
+        else:
+            dataset_hashes[ds_name] = hash_dataframe(df_filtered)
+            print(f"  Dataset hash: {dataset_hashes[ds_name][:16]}...")
+
+            ra_bins = np.floor(df_filtered['ra'].values).astype(int)
+            dec_bins = np.floor(df_filtered['dec'].values).astype(int)
+            sky_frac = len(set(zip(ra_bins, dec_bins))) / (360 * 180)
+
+            result = run_blind_test(df_filtered, ds_name)
+            result['filter_stats'] = filter_stats
+            result['dataset_hash'] = dataset_hashes[ds_name]
+            result['sky_fraction'] = sky_frac
+            result['median_z'] = float(df_filtered['z_obs'].median())
+
+        print(f"\n  --- Results for {ds_name} ---")
+        if 'true_r' in result:
+            print(f"  True axis |r|: {abs(result['true_r']):.6f}")
+            print(f"  True axis p:   {result['true_p']:.4e}")
+            print(f"  True axis rank: {result['true_rank']} of {result['total_axes']}")
+            if 'decoy_r_values' in result:
+                decoy_abs = [abs(r) for r in result['decoy_r_values']]
+                print(f"  Decoy |r| range: [{min(decoy_abs):.6f}, {max(decoy_abs):.6f}]")
+            print(f"  Sky fraction: {result.get('sky_fraction', 'N/A')}")
+            print(f"  Median z: {result.get('median_z', 'N/A')}")
+        print(f"  >>> VERDICT: {result['VERDICT']} <<<")
+
+        all_results.append(result)
+
+    n_pass = sum(1 for r in all_results if r['VERDICT'] == 'PASS')
+    n_fail = sum(1 for r in all_results if r['VERDICT'] == 'FAIL')
+    overall_verdict = 'PASS' if n_pass >= PASS_REQUIRED else 'FAIL'
+
+    output = {
+        'test_name': 'Blind Orbital Anisotropy Test (BOAT)',
+        'version': 'v1.1',
+        'institution': 'TSM2 Institute for Cosmology Ltd',
+        'execution_time': datetime.now(timezone.utc).isoformat(),
+        'mode': 'production',
+        'manifest_constants': manifest_record,
+        'datasets_tested': len(all_results),
+        'n_pass': n_pass,
+        'n_fail': n_fail,
+        'pass_required': PASS_REQUIRED,
+        'overall_verdict': overall_verdict,
+        'per_dataset_results': all_results,
+        'dataset_hashes': dataset_hashes,
+    }
+
+    results_path = os.path.join(RESULTS_DIR, 'boat_results_production_v1.1.json')
+    results_hash = save_results_json(output, results_path)
+    output['results_file_hash'] = results_hash
+
+    print("\n" + "=" * 70)
+    print("  FINAL RESULTS — BOAT v1.1 PRODUCTION RUN")
+    print("=" * 70)
+    print(f"  Datasets tested: {len(all_results)}")
+    print(f"  Passed: {n_pass}")
+    print(f"  Failed: {n_fail}")
+    print(f"  Required to pass: {PASS_REQUIRED}")
+    for r in all_results:
+        name = r['dataset_name']
+        v = r['VERDICT']
+        abs_r = abs(r.get('true_r', 0))
+        rank = r.get('true_rank', 'N/A')
+        print(f"    {name:>12}: {v}  |r|={abs_r:.6f}  rank={rank}")
+    print()
+    print(f"  ╔══════════════════════════════════════╗")
+    print(f"  ║  OVERALL VERDICT:  {overall_verdict:^17s} ║")
+    print(f"  ╚══════════════════════════════════════╝")
+    print()
+    print(f"  Results saved: {results_path}")
+    print(f"  Results hash:  {results_hash}")
+    print("=" * 70)
+
+    return output
+
+
 if __name__ == '__main__':
     run_full_test(mode='synthetic')

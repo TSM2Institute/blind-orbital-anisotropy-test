@@ -1,0 +1,342 @@
+{
+  "test_name": "Blind Orbital Anisotropy Test (BOAT)",
+  "version": "v1.1",
+  "institution": "TSM2 Institute for Cosmology Ltd",
+  "execution_time": "2026-02-21T04:16:10.742176+00:00",
+  "mode": "production",
+  "manifest_constants": {
+    "v_obs_km_s": 370.0,
+    "cst_period_gyr": 284.0,
+    "cog_x_ra_deg": 347.75,
+    "cog_x_dec_deg": 66.0,
+    "cmb_dipole_ra_deg": 167.7866,
+    "cmb_dipole_dec_deg": -7.1454,
+    "r_obs_mly": 55.783674792816086,
+    "beta_obs": 0.0012341871522331626,
+    "correlation_threshold": 0.01,
+    "p_value_threshold": 0.01,
+    "n_datasets": 5,
+    "pass_required": 3,
+    "n_decoy_axes": 10,
+    "z_min": 0.01,
+    "z_max": 0.5,
+    "galactic_mask_deg": 10,
+    "min_sample_size": 1000,
+    "dataset_selection_seed": 20260219,
+    "decoy_axes_seed": 20260219
+  },
+  "datasets_tested": 5,
+  "n_pass": 1,
+  "n_fail": 4,
+  "pass_required": 3,
+  "overall_verdict": "FAIL",
+  "per_dataset_results": [
+    {
+      "dataset_name": "6dFGS_DR3",
+      "n_objects": 119907,
+      "z_obs_mean": 0.06094570049485415,
+      "z_model_range": [
+        -0.0012334250464177687,
+        0.001225032342932586
+      ],
+      "true_r": -0.07712144753586658,
+      "true_p": 1.4171334037980394e-157,
+      "true_amplitude": -0.004987672269813751,
+      "true_rms": 0.040535067365598365,
+      "true_dq_significant": [
+        "dipole",
+        "quadrupole"
+      ],
+      "decoy_r_values": [
+        0.0015754095736686645,
+        -0.023972463380337313,
+        -0.05105378639590783,
+        -0.07312660472383388,
+        0.010245825129249191,
+        -0.06659857168185483,
+        -0.014288737239511334,
+        -0.07228037170306077,
+        -0.06033623824071983,
+        -0.0616684826878508
+      ],
+      "decoy_p_values": [
+        0.5853952263416874,
+        1.022071596759864e-16,
+        5.003311663773736e-70,
+        7.781937402067443e-142,
+        0.00038825892056617314,
+        6.273073902413403e-118,
+        7.496205609059655e-07,
+        1.3090695029445838e-138,
+        4.1798198567245177e-97,
+        2.31122245970996e-101
+      ],
+      "true_rank": 1,
+      "total_axes": 11,
+      "passes_r_threshold": "True",
+      "passes_p_threshold": "True",
+      "passes_rank": true,
+      "VERDICT": "PASS",
+      "filter_stats": {
+        "source": "6dFGS_DR3",
+        "n_raw": 124498,
+        "n_after_coord_cut": 124498,
+        "n_after_z_cut": 119993,
+        "n_after_gal_cut": 119907,
+        "n_after_dedup": 119907,
+        "passes_min_size": true,
+        "n_final": 119907
+      },
+      "dataset_hash": "1d694204aeef28280797d10b4d0e6dc444989c4347fef6a1a3838dd1eb1f1b3f",
+      "sky_fraction": 0.33733024691358027,
+      "median_z": 0.05397734188496497
+    },
+    {
+      "dataset_name": "2dFGRS",
+      "n_objects": 129168,
+      "z_obs_mean": 0.11669222098352534,
+      "z_model_range": [
+        -0.001233270503930739,
+        0.0012249846399279285
+      ],
+      "true_r": -0.07332232972654165,
+      "true_p": 1.9179858288525947e-153,
+      "true_amplitude": -0.006126383451473117,
+      "true_rms": 0.06343039257133194,
+      "true_dq_significant": [
+        "dipole",
+        "quadrupole"
+      ],
+      "decoy_r_values": [
+        -0.06238383988510196,
+        0.0007360687340033719,
+        -0.06486254477766011,
+        -0.06423133444567976,
+        0.08281691418003698,
+        -0.08072873245651975,
+        0.07624993418745145,
+        -0.06581077248498948,
+        -0.08242352988344495,
+        -0.08195530280980849
+      ],
+      "decoy_p_values": [
+        1.5195045687508634e-111,
+        0.7913636848169942,
+        1.915790991500875e-120,
+        3.816341620455808e-118,
+        2.475008744403065e-195,
+        1.116622962719792e-185,
+        8.219986981022528e-166,
+        6.106454511318912e-124,
+        1.7036389961103628e-193,
+        2.55441180547216e-191
+      ],
+      "true_rank": 6,
+      "total_axes": 11,
+      "passes_r_threshold": "True",
+      "passes_p_threshold": "True",
+      "passes_rank": false,
+      "VERDICT": "FAIL",
+      "filter_stats": {
+        "source": "2dFGRS",
+        "n_raw": 135546,
+        "n_after_coord_cut": 135546,
+        "n_after_z_cut": 129168,
+        "n_after_gal_cut": 129168,
+        "n_after_dedup": 129168,
+        "passes_min_size": true,
+        "n_final": 129168
+      },
+      "dataset_hash": "b376ab0756d13a4347a81307d249978192b5837a67150f8d33d11335783c9067",
+      "sky_fraction": 0.03964506172839506,
+      "median_z": 0.108
+    },
+    {
+      "dataset_name": "GAMA_DR4",
+      "n_objects": 282139,
+      "z_obs_mean": "0.22625688",
+      "z_model_range": [
+        -0.001224729195390073,
+        0.0009892618737932235
+      ],
+      "true_r": 0.04677706523170058,
+      "true_p": 2.0180869891761252e-136,
+      "true_amplitude": 0.007121580611569146,
+      "true_rms": 0.1071062803529114,
+      "true_dq_significant": [
+        "dipole",
+        "quadrupole"
+      ],
+      "decoy_r_values": [
+        0.07732110867793104,
+        0.06323877379237935,
+        0.07000128788066909,
+        0.04497871981828827,
+        -0.009489477756461355,
+        0.04506112990439884,
+        -0.07220026386284356,
+        0.03037369267274685,
+        0.011290411668426347,
+        0.009853097731252322
+      ],
+      "decoy_p_values": [
+        0.0,
+        7.508814626052829e-248,
+        2.4124661831703905e-303,
+        2.8348895907930088e-126,
+        4.6408885794351953e-07,
+        9.913353792412241e-127,
+        1.3e-322,
+        1.398010022352819e-58,
+        2.006681749761739e-09,
+        1.6610513647295028e-07
+      ],
+      "true_rank": 5,
+      "total_axes": 11,
+      "passes_r_threshold": "True",
+      "passes_p_threshold": "True",
+      "passes_rank": false,
+      "VERDICT": "FAIL",
+      "filter_stats": {
+        "source": "GAMA_DR4",
+        "n_raw": 318687,
+        "n_after_coord_cut": 318687,
+        "n_after_z_cut": 282141,
+        "n_after_gal_cut": 282141,
+        "n_after_dedup": 282139,
+        "passes_min_size": true,
+        "n_final": 282139
+      },
+      "dataset_hash": "1e59d74c01b97e8c664b118bd02af6de30d5a61ad887a933d6ce9c57a5065039",
+      "sky_fraction": 0.0072839506172839505,
+      "median_z": 0.2164199948310852
+    },
+    {
+      "dataset_name": "2MRS",
+      "n_objects": 37688,
+      "z_obs_mean": 0.03207810442698201,
+      "z_model_range": [
+        -0.0012333940715874014,
+        0.0012349327236780283
+      ],
+      "true_r": -0.023346578621437762,
+      "true_p": 5.819822919679993e-06,
+      "true_amplitude": -0.0005714269219459477,
+      "true_rms": 0.014826124648326377,
+      "true_dq_significant": [
+        "dipole",
+        "quadrupole"
+      ],
+      "decoy_r_values": [
+        -0.05318847596977237,
+        -0.029243002587098,
+        -0.06074857769128874,
+        0.000941278265200613,
+        0.02492075489673972,
+        -0.042291265145499995,
+        0.0432338221894745,
+        0.014418568171776048,
+        -0.005326152696079428,
+        -0.0008683828508783261
+      ],
+      "decoy_p_values": [
+        5.014939509170945e-25,
+        1.3621004690934423e-08,
+        3.727487796514642e-32,
+        0.8550113897059178,
+        1.3078577844497006e-06,
+        2.147010316099546e-16,
+        4.5880567139969296e-17,
+        0.005123152242685296,
+        0.30115475631305777,
+        0.8661293301579668
+      ],
+      "true_rank": 7,
+      "total_axes": 11,
+      "passes_r_threshold": "True",
+      "passes_p_threshold": "True",
+      "passes_rank": false,
+      "VERDICT": "FAIL",
+      "filter_stats": {
+        "source": "2MRS",
+        "n_raw": 43533,
+        "n_after_coord_cut": 43533,
+        "n_after_z_cut": 40333,
+        "n_after_gal_cut": 37688,
+        "n_after_dedup": 37688,
+        "passes_min_size": true,
+        "n_final": 37688
+      },
+      "dataset_hash": "101878bcce4e8ad52594e7d6dfdf71bedebb00ca2282dc13e449c4e016bff6d2",
+      "sky_fraction": 0.3147993827160494,
+      "median_z": 0.02950040857932457
+    },
+    {
+      "dataset_name": "SDSS_DR18",
+      "n_objects": 1575204,
+      "z_obs_mean": 0.2406709110968038,
+      "z_model_range": [
+        -0.0012314304322375014,
+        0.001234949183394507
+      ],
+      "true_r": -0.13246576676120717,
+      "true_p": 0.0,
+      "true_amplitude": -0.03097159648208801,
+      "true_rms": 0.15177883624387106,
+      "true_dq_significant": [
+        "dipole",
+        "quadrupole"
+      ],
+      "decoy_r_values": [
+        0.03456185972111018,
+        -0.005935814026581627,
+        -0.06253188099363663,
+        -0.13255432064789902,
+        0.03759160115312034,
+        -0.1087925178390405,
+        -0.0406908671445913,
+        -0.1435988390036924,
+        -0.13070862699329877,
+        -0.13506280357913075
+      ],
+      "decoy_p_values": [
+        0.0,
+        9.339004299979437e-14,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "true_rank": 4,
+      "total_axes": 11,
+      "passes_r_threshold": "True",
+      "passes_p_threshold": "True",
+      "passes_rank": false,
+      "VERDICT": "FAIL",
+      "filter_stats": {
+        "source": "SDSS_DR18",
+        "n_raw": 1575213,
+        "n_after_coord_cut": 1575213,
+        "n_after_z_cut": 1575213,
+        "n_after_gal_cut": 1575204,
+        "n_after_dedup": 1575204,
+        "passes_min_size": true,
+        "n_final": 1575204
+      },
+      "dataset_hash": "240ae074128eac78062aae504abfca373278f4e45ea33fb7078c57846f1d485d",
+      "sky_fraction": 0.2093672839506173,
+      "median_z": 0.2035885
+    }
+  ],
+  "dataset_hashes": {
+    "6dFGS_DR3": "1d694204aeef28280797d10b4d0e6dc444989c4347fef6a1a3838dd1eb1f1b3f",
+    "2dFGRS": "b376ab0756d13a4347a81307d249978192b5837a67150f8d33d11335783c9067",
+    "GAMA_DR4": "1e59d74c01b97e8c664b118bd02af6de30d5a61ad887a933d6ce9c57a5065039",
+    "2MRS": "101878bcce4e8ad52594e7d6dfdf71bedebb00ca2282dc13e449c4e016bff6d2",
+    "SDSS_DR18": "240ae074128eac78062aae504abfca373278f4e45ea33fb7078c57846f1d485d"
+  }
+}
