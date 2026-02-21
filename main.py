@@ -1,6 +1,11 @@
-import matplotlib.pyplot as plt
+"""
+BOAT v2.0 — Blind Orbital Anisotropy Test
+Main entry point. Do not run until all modules are built and manifest is sealed.
+"""
 
-fig, ax = plt.subplots()
-ax.plot([1, 2, 3, 4], [1, 4, 2, 5])
-plt.ylabel('some numbers')
-plt.show()
+def main():
+    print("BOAT v2.0 — modules under construction")
+    print("Do not execute until manifest is sealed.")
+
+if __name__ == "__main__":
+    main()
