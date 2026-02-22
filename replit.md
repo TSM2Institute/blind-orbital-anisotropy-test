@@ -77,10 +77,10 @@ attached_assets/     — Survey data files (large, not in git) and build prompts
 | `boat/manifest.py` | BUILT — 8/8 verification checks passing |
 | `boat/geometry.py` | UNCHANGED from v1.1 — working |
 | `boat/hashing.py` | UNCHANGED from v1.1 — working |
-| `boat/montecarlo.py` | BUILT — 6dFGS + SDSS calibration complete (10,000 realisations each) |
+| `boat/montecarlo.py` | BUILT — 6dFGS + SDSS calibration complete (10,000 realisations each). Refactored to import loaders from datasets.py |
 | `boat/analysis.py` | BUILT — verified on 6dFGS (1.9s runtime) |
-| `boat/datasets.py` | TO BE BUILT |
-| `boat/runner.py` | TO BE BUILT |
+| `boat/datasets.py` | BUILT — survey loaders (6dFGS, SDSS) + quality cuts + pre-qualification. DESI stubs ready |
+| `boat/runner.py` | BUILT — full production pipeline, tested on 6dFGS+SDSS |
 | `main.py` | placeholder, TO BE REBUILT |
 
 Monte Carlo calibration results (provisional, 2 of 4 surveys):
@@ -89,9 +89,11 @@ Monte Carlo calibration results (provisional, 2 of 4 surveys):
 - Combined provisional R_NULL_99 = 1.5627
 - Saved to: `boat/results/montecarlo_null_calibration_partial.json`
 
-6dFGS analysis.py verification (R_NULL_99=None, so verdict=FAIL as expected):
-- True axis |r| = 0.061962, p = 3.31e-78, ratio = 1.5489, rank = #6/51
-- Orbital discriminator: DETECTED on k_hat
+Test run results (R_NULL_99=None, so all ratio tests FAIL as expected):
+- 6dFGS: |r|=0.061962, ratio=1.5489, rank=#6/51, p=3.31e-78, z-bin=FAIL, orbital=DETECTED on k_hat
+- SDSS: |r|=0.082708, ratio=1.4655, rank=#5/51, p=2.03e-05, z-bin=FAIL, orbital=NOT DETECTED
+- Overall: FAIL (0 of 2, required 2)
+- Saved to: `boat/results/boat_results_test_dev_v2.0.json`
 
 ### Critical Errors to Avoid (from v1.1 lessons)
 
