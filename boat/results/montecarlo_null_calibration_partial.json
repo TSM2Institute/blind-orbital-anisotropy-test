@@ -1,0 +1,76 @@
+{
+  "version": "BOAT_v2.0_MC",
+  "n_surveys_completed": 2,
+  "surveys_included": [
+    "6dFGS",
+    "SDSS"
+  ],
+  "n_total_realisations": 20000,
+  "mc_base_seed": 42,
+  "decoy_seed": 20260301,
+  "n_decoy_axes": 50,
+  "r_weight_deg": 5.0,
+  "combined_percentiles": {
+    "R_NULL_95": 1.47663,
+    "R_NULL_99": 1.562729,
+    "R_NULL_995": 1.57755
+  },
+  "combined_stats": {
+    "min": 9e-06,
+    "max": 1.597194,
+    "mean": 0.831499,
+    "std": 0.433261
+  },
+  "per_survey": {
+    "6dFGS": {
+      "status": "completed",
+      "survey": "6dFGS",
+      "n_galaxies": 119906,
+      "sky_fraction": 0.3373148148148148,
+      "median_z": 0.05397567406448898,
+      "n_realisations": 10000,
+      "mc_base_seed": 42,
+      "weight_stats": {
+        "min": 0.26130762807767793,
+        "max": 27.533572179553218,
+        "mean": 1.0,
+        "std": 0.5620831628832785
+      },
+      "percentiles": {
+        "p50": 0.896888,
+        "p95": 1.515039,
+        "p99": 1.57755,
+        "p995": 1.587251
+      },
+      "min_ratio": 9e-06,
+      "max_ratio": 1.597194,
+      "mean_ratio": 0.862952
+    },
+    "SDSS": {
+      "status": "completed",
+      "survey": "SDSS",
+      "n_galaxies": 1575204,
+      "sky_fraction": 0.2093672839506173,
+      "median_z": 0.2035885,
+      "n_realisations": 10000,
+      "mc_base_seed": 42,
+      "weight_stats": {
+        "min": 0.5190703950742768,
+        "max": 8829.906490608522,
+        "mean": 0.9999999999999999,
+        "std": 24.365539809585297
+      },
+      "percentiles": {
+        "p50": 0.833583,
+        "p95": 1.418926,
+        "p99": 1.498426,
+        "p995": 1.509547
+      },
+      "min_ratio": 0.000479,
+      "max_ratio": 1.523355,
+      "mean_ratio": 0.800047
+    }
+  },
+  "note": "Partial calibration (6dFGS + SDSS only). DESI surveys to be added after data download. Final R_NULL_99 will be recomputed from all 4 surveys before sealing.",
+  "sha256": "5540944795d0a6027d7cf243fb3fb5e368577d9ce466be49a74c7626d2df84f3"
+}
