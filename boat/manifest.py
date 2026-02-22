@@ -147,9 +147,8 @@ DATA_DIR = "attached_assets"
 DATA_FILES = {
     "6dFGS": "6dFGS_DR3.txt.gz",
     "SDSS": "SDSS_DR18.csv",
-    # DESI files will be added after download
-    # "DESI_BGS": "DESI_DR1_BGS.csv",
-    # "DESI_LRG": "DESI_DR1_LRG.csv",
+    "DESI_BGS": "DESI_DR1_BGS.csv",
+    "DESI_LRG": "DESI_DR1_LRG.csv",
 }
 
 # ============================================================

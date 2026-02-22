@@ -7,8 +7,8 @@ blind orbital anisotropy test.
 Supported surveys:
 - 6dFGS DR3 (Southern, available)
 - SDSS DR18 (Northern, available)
-- DESI DR1 BGS (Both hemispheres, pending data download)
-- DESI DR1 LRG (Both hemispheres, pending data download)
+- DESI DR1 BGS (Both hemispheres, downloaded)
+- DESI DR1 LRG (Both hemispheres, downloaded)
 
 Usage:
     from boat.datasets import load_survey, get_available_surveys
@@ -105,46 +105,21 @@ def load_sdss():
 
 
 def load_desi_bgs():
-    """
-    Load DESI DR1 BGS survey data.
-
-    Data file not yet available — will be downloaded from
-    NOIRLab Astro Data Lab after account approval.
-
-    Expected file: attached_assets/DESI_DR1_BGS.csv (or .fits)
-    Expected columns: RA, DEC, Z (spectroscopic)
-    Quality flag: ZWARN == 0
-
-    Returns:
-        DataFrame with columns: 'ra', 'dec', 'z'
-    """
-    filepath = os.path.join(DATA_DIR, "DESI_DR1_BGS.csv")
+    """Load DESI DR1 BGS survey data (bright programme)."""
+    filepath = os.path.join(DATA_DIR, DATA_FILES["DESI_BGS"])
     if not os.path.exists(filepath):
-        raise FileNotFoundError(
-            f"DESI BGS data not found at {filepath}. "
-            "Download from NOIRLab Astro Data Lab first."
-        )
-    raise NotImplementedError("DESI BGS loader — complete after data download")
+        raise FileNotFoundError(f"DESI BGS data not found at {filepath}")
+    df = pd.read_csv(filepath)
+    return df
 
 
 def load_desi_lrg():
-    """
-    Load DESI DR1 LRG survey data.
-
-    Same source as BGS but different target class and redshift range.
-
-    Expected file: attached_assets/DESI_DR1_LRG.csv (or .fits)
-
-    Returns:
-        DataFrame with columns: 'ra', 'dec', 'z'
-    """
-    filepath = os.path.join(DATA_DIR, "DESI_DR1_LRG.csv")
+    """Load DESI DR1 LRG survey data (dark programme)."""
+    filepath = os.path.join(DATA_DIR, DATA_FILES["DESI_LRG"])
     if not os.path.exists(filepath):
-        raise FileNotFoundError(
-            f"DESI LRG data not found at {filepath}. "
-            "Download from NOIRLab Astro Data Lab first."
-        )
-    raise NotImplementedError("DESI LRG loader — complete after data download")
+        raise FileNotFoundError(f"DESI LRG data not found at {filepath}")
+    df = pd.read_csv(filepath)
+    return df
 
 
 SURVEY_LOADERS = {
@@ -164,8 +139,8 @@ def get_available_surveys():
     file_checks = {
         "6dFGS": os.path.join(DATA_DIR, DATA_FILES.get("6dFGS", "")),
         "SDSS": os.path.join(DATA_DIR, DATA_FILES.get("SDSS", "")),
-        "DESI_BGS": os.path.join(DATA_DIR, "DESI_DR1_BGS.csv"),
-        "DESI_LRG": os.path.join(DATA_DIR, "DESI_DR1_LRG.csv"),
+        "DESI_BGS": os.path.join(DATA_DIR, DATA_FILES.get("DESI_BGS", "")),
+        "DESI_LRG": os.path.join(DATA_DIR, DATA_FILES.get("DESI_LRG", "")),
     }
     for name, path in file_checks.items():
         if path and os.path.exists(path):

@@ -1,0 +1,15 @@
+{
+  "survey": "DESI_BGS",
+  "n_galaxies": 5841593,
+  "sky_fraction": 0.22887345679012347,
+  "median_z": 0.2235735710753831,
+  "mc_base_seed": 42,
+  "batch_size": 5,
+  "total_target": 5,
+  "weight_stats": {
+    "min": 0.41225629828966454,
+    "max": 11.053595732836948,
+    "mean": 1.0000000000000009,
+    "std": 0.8535732679241829
+  }
+}
