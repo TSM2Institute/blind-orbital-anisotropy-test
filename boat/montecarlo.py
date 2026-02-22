@@ -132,6 +132,36 @@ def weighted_pearson_r(x, y, w):
 
 
 # ============================================================
+# SUBSAMPLING FOR MC CALIBRATION
+# ============================================================
+
+def subsample_survey(df, max_galaxies=1_000_000, seed=12345):
+    """
+    Random subsample of survey data for MC calibration.
+
+    Preserves sky footprint geometry by random selection.
+    Only used for MC null calibration, NOT for production analysis.
+
+    Args:
+        df: DataFrame with ra, dec, z
+        max_galaxies: maximum sample size
+        seed: RNG seed for reproducibility
+
+    Returns:
+        DataFrame (subsampled if N > max_galaxies, unchanged otherwise)
+    """
+    if len(df) <= max_galaxies:
+        print(f"  Subsample: N={len(df):,} <= {max_galaxies:,}, no subsampling needed")
+        return df
+
+    rng = np.random.default_rng(seed)
+    indices = rng.choice(len(df), size=max_galaxies, replace=False)
+    df_sub = df.iloc[indices].copy().reset_index(drop=True)
+    print(f"  Subsample: {len(df):,} → {len(df_sub):,} galaxies (seed={seed})")
+    return df_sub
+
+
+# ============================================================
 # CORE MONTE CARLO LOOP
 # ============================================================
 

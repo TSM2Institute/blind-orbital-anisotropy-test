@@ -43,4 +43,4 @@ outputType = "console"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd /home/runner/workspace && python3 run_mc_timing.py"
+args = "cd /home/runner/workspace && python3 -u run_desi_bgs_mc_validation.py"

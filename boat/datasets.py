@@ -31,7 +31,7 @@ from boat.manifest import (
     C_KM_S
 )
 
-LRG_SURVEYS = {"DESI_LRG"}
+LRG_SURVEYS = {"DESI_LRG", "DESI_LRG_MC"}
 
 
 def load_6dfgs():
@@ -122,11 +122,29 @@ def load_desi_lrg():
     return df
 
 
+def load_desi_bgs_mc_subsample():
+    """Load DESI BGS subsample for MC calibration only."""
+    filepath = os.path.join(DATA_DIR, "DESI_DR1_BGS_MC_SUBSAMPLE.csv")
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(f"BGS MC subsample not found at {filepath}")
+    return pd.read_csv(filepath)
+
+
+def load_desi_lrg_mc_subsample():
+    """Load DESI LRG subsample for MC calibration only."""
+    filepath = os.path.join(DATA_DIR, "DESI_DR1_LRG_MC_SUBSAMPLE.csv")
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(f"LRG MC subsample not found at {filepath}")
+    return pd.read_csv(filepath)
+
+
 SURVEY_LOADERS = {
     "6dFGS": load_6dfgs,
     "SDSS": load_sdss,
     "DESI_BGS": load_desi_bgs,
     "DESI_LRG": load_desi_lrg,
+    "DESI_BGS_MC": load_desi_bgs_mc_subsample,
+    "DESI_LRG_MC": load_desi_lrg_mc_subsample,
 }
 
 
