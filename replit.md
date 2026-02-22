@@ -70,19 +70,28 @@ attached_assets/     — Survey data files (large, not in git) and build prompts
 - **z_model is NOT subtracted from data:** The model prediction is computed for reference only. Residuals are simply `z_obs - mean(z_obs)`. This is a deliberate methodological choice — subtracting z_model would remove the very signal being tested.
 - **Deterministic reproducibility:** All random processes use fixed seeds from the manifest (dataset selection seed, decoy axes seed).
 
-### v2.0 Initialisation Status (21 Feb 2026)
+### v2.0 Build Status (22 Feb 2026)
 
-v1.1 artifacts have been deleted. The repository is now in v2.0 state. Modules to be built:
-- `boat/manifest.py` — TO BE BUILT
-- `boat/montecarlo.py` — TO BE BUILT (new in v2)
-- `boat/datasets.py` — TO BE BUILT
-- `boat/analysis.py` — TO BE BUILT
-- `boat/runner.py` — TO BE BUILT
-- `main.py` — placeholder created, TO BE REBUILT
+| Module | Status |
+|--------|--------|
+| `boat/manifest.py` | BUILT — 8/8 verification checks passing |
+| `boat/geometry.py` | UNCHANGED from v1.1 — working |
+| `boat/hashing.py` | UNCHANGED from v1.1 — working |
+| `boat/montecarlo.py` | BUILT — 6dFGS + SDSS calibration complete (10,000 realisations each) |
+| `boat/analysis.py` | BUILT — verified on 6dFGS (1.9s runtime) |
+| `boat/datasets.py` | TO BE BUILT |
+| `boat/runner.py` | TO BE BUILT |
+| `main.py` | placeholder, TO BE REBUILT |
 
-Files kept unchanged from v1.1: `boat/__init__.py`, `boat/geometry.py`, `boat/hashing.py`, `attached_assets/`.
+Monte Carlo calibration results (provisional, 2 of 4 surveys):
+- 6dFGS: p99 = 1.5776, mean ratio = 0.8630 (119,906 galaxies)
+- SDSS: p99 = 1.4984, mean ratio = 0.8000 (1,575,204 galaxies)
+- Combined provisional R_NULL_99 = 1.5627
+- Saved to: `boat/results/montecarlo_null_calibration_partial.json`
 
-Note: `geometry.py` imports `V_OBS_VEC` and `C_KM_S` from `boat.manifest`. It cannot be imported until manifest.py is rebuilt. The `radec_to_unit_vector` function itself is correct.
+6dFGS analysis.py verification (R_NULL_99=None, so verdict=FAIL as expected):
+- True axis |r| = 0.061962, p = 3.31e-78, ratio = 1.5489, rank = #6/51
+- Orbital discriminator: DETECTED on k_hat
 
 ### Critical Errors to Avoid (from v1.1 lessons)
 
