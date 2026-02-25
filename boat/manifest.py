@@ -137,7 +137,7 @@ MC_FPR_TARGET = 0.01           # Global false-positive rate target
 # R_NULL_99 — Monte Carlo calibrated ratio threshold
 # [TO BE FILLED AFTER MONTE CARLO SIMULATION]
 # This is the ONLY value that changes before sealing.
-R_NULL_99 = None
+R_NULL_99 = 1.541144  # Monte Carlo calibrated — 99th percentile of 40,000 null realisations
 
 # ============================================================
 # DATA FILE PATHS (clean names, relative to project root)
