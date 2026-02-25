@@ -83,11 +83,19 @@ attached_assets/     — Survey data files (large, not in git) and build prompts
 | `boat/runner.py` | BUILT — full production pipeline, tested on 6dFGS+SDSS |
 | `main.py` | placeholder, TO BE REBUILT |
 
-Monte Carlo calibration results (provisional, 2 of 4 surveys):
-- 6dFGS: p99 = 1.5776, mean ratio = 0.8630 (119,906 galaxies)
-- SDSS: p99 = 1.4984, mean ratio = 0.8000 (1,575,204 galaxies)
-- Combined provisional R_NULL_99 = 1.5627
-- Saved to: `boat/results/montecarlo_null_calibration_partial.json`
+Monte Carlo calibration results (FINAL — 4 surveys, 40,000 realisations):
+- 6dFGS: p99 = 1.5776, mean ratio = 0.8630 (119,906 galaxies, 10k realisations)
+- SDSS: p99 = 1.4984, mean ratio = 0.8000 (1,575,204 galaxies, 10k realisations)
+- DESI BGS: p99 = 1.5369, mean ratio = 0.9863 (1M subsample from 5.8M, 10k realisations)
+- DESI LRG: p99 = 1.5264, mean ratio = 0.9246 (1M subsample from 3.8M, 10k realisations)
+- **FINAL COMBINED R_NULL_99 = 1.541144** (this goes into manifest.py)
+- R_NULL_95 = 1.495094, R_NULL_995 = 1.562728
+- Saved to: `boat/results/montecarlo_null_calibration_final.json`
+- SHA-256: d661f933c68a837d3048a04ba4d637a63ebf5a98f12650bbe89ee5207446ef6f
+- Total compute time: 1.7 hours (BGS 45 min + LRG 58 min)
+
+DESI subsampling: 1M galaxies per survey (seed=12345), MC-only. Production analysis uses full datasets.
+Subsample files: `attached_assets/DESI_DR1_BGS_MC_SUBSAMPLE.csv`, `attached_assets/DESI_DR1_LRG_MC_SUBSAMPLE.csv`
 
 Test run results (R_NULL_99=None, so all ratio tests FAIL as expected):
 - 6dFGS: |r|=0.061962, ratio=1.5489, rank=#6/51, p=3.31e-78, z-bin=FAIL, orbital=DETECTED on k_hat

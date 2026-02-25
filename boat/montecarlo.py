@@ -461,8 +461,6 @@ def run_mc_batch(survey_name, batch_size=1000, total_realisations=10000, mc_base
     Returns:
         dict with survey results
     """
-    import json
-
     progress_dir = "boat/results/mc_progress"
     os.makedirs(progress_dir, exist_ok=True)
     ratios_file = os.path.join(progress_dir, f"{survey_name}_ratios.npy")
@@ -601,8 +599,6 @@ def combine_batch_results(survey_names=None):
     Returns:
         dict with combined R_NULL_99 and per-survey breakdowns
     """
-    import json
-
     progress_dir = "boat/results/mc_progress"
 
     if survey_names is None:
@@ -671,7 +667,7 @@ def combine_batch_results(survey_names=None):
             "std": round(float(all_ratios.std()), 6),
         },
         "per_survey": per_survey,
-        "note": "Partial calibration (6dFGS + SDSS only). DESI surveys to be added after data download. Final R_NULL_99 will be recomputed from all 4 surveys before sealing."
+        "note": "Final calibration from all included surveys. R_NULL_99 to be sealed in manifest.py."
     }
 
     return results

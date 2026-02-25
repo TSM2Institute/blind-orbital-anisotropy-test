@@ -1,0 +1,15 @@
+{
+  "survey": "DESI_LRG_MC",
+  "n_galaxies": 1000000,
+  "sky_fraction": 0.19516975308641976,
+  "median_z": 0.798753984769184,
+  "mc_base_seed": 42,
+  "batch_size": 1000,
+  "total_target": 10000,
+  "weight_stats": {
+    "min": 0.3088453784419658,
+    "max": 15.095009939372497,
+    "mean": 1.0000000000000007,
+    "std": 1.0067104623022074
+  }
+}

@@ -5,7 +5,7 @@
   "median_z": 0.223353992008409,
   "mc_base_seed": 42,
   "batch_size": 1000,
-  "total_target": 1000,
+  "total_target": 10000,
   "weight_stats": {
     "min": 0.40993561931238726,
     "max": 11.069891684135499,

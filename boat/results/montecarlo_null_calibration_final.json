@@ -1,0 +1,126 @@
+{
+  "version": "BOAT_v2.0_MC",
+  "n_surveys_completed": 4,
+  "surveys_included": [
+    "6dFGS",
+    "SDSS",
+    "DESI_BGS_MC",
+    "DESI_LRG_MC"
+  ],
+  "n_total_realisations": 40000,
+  "mc_base_seed": 42,
+  "decoy_seed": 20260301,
+  "n_decoy_axes": 50,
+  "r_weight_deg": 5.0,
+  "combined_percentiles": {
+    "R_NULL_95": 1.495094,
+    "R_NULL_99": 1.541144,
+    "R_NULL_995": 1.562728
+  },
+  "combined_stats": {
+    "min": 9e-06,
+    "max": 1.597194,
+    "mean": 0.893469,
+    "std": 0.441068
+  },
+  "per_survey": {
+    "6dFGS": {
+      "status": "completed",
+      "survey": "6dFGS",
+      "n_galaxies": 119906,
+      "sky_fraction": 0.3373148148148148,
+      "median_z": 0.05397567406448898,
+      "n_realisations": 10000,
+      "mc_base_seed": 42,
+      "weight_stats": {
+        "min": 0.26130762807767793,
+        "max": 27.533572179553218,
+        "mean": 1.0,
+        "std": 0.5620831628832785
+      },
+      "percentiles": {
+        "p50": 0.896888,
+        "p95": 1.515039,
+        "p99": 1.57755,
+        "p995": 1.587251
+      },
+      "min_ratio": 9e-06,
+      "max_ratio": 1.597194,
+      "mean_ratio": 0.862952
+    },
+    "SDSS": {
+      "status": "completed",
+      "survey": "SDSS",
+      "n_galaxies": 1575204,
+      "sky_fraction": 0.2093672839506173,
+      "median_z": 0.2035885,
+      "n_realisations": 10000,
+      "mc_base_seed": 42,
+      "weight_stats": {
+        "min": 0.5190703950742768,
+        "max": 8829.906490608522,
+        "mean": 0.9999999999999999,
+        "std": 24.365539809585297
+      },
+      "percentiles": {
+        "p50": 0.833583,
+        "p95": 1.418926,
+        "p99": 1.498426,
+        "p995": 1.509547
+      },
+      "min_ratio": 0.000479,
+      "max_ratio": 1.523355,
+      "mean_ratio": 0.800047
+    },
+    "DESI_BGS_MC": {
+      "status": "completed",
+      "survey": "DESI_BGS_MC",
+      "n_galaxies": 1000000,
+      "sky_fraction": 0.22554012345679011,
+      "median_z": 0.223353992008409,
+      "n_realisations": 10000,
+      "mc_base_seed": 42,
+      "weight_stats": {
+        "min": 0.40993561931238726,
+        "max": 11.069891684135499,
+        "mean": 0.9999999999999999,
+        "std": 0.8537665956885759
+      },
+      "percentiles": {
+        "p50": 1.103277,
+        "p95": 1.509967,
+        "p99": 1.536864,
+        "p995": 1.540761
+      },
+      "min_ratio": 5.8e-05,
+      "max_ratio": 1.546343,
+      "mean_ratio": 0.986304
+    },
+    "DESI_LRG_MC": {
+      "status": "completed",
+      "survey": "DESI_LRG_MC",
+      "n_galaxies": 1000000,
+      "sky_fraction": 0.19516975308641976,
+      "median_z": 0.798753984769184,
+      "n_realisations": 10000,
+      "mc_base_seed": 42,
+      "weight_stats": {
+        "min": 0.3088453784419658,
+        "max": 15.095009939372497,
+        "mean": 1.0000000000000007,
+        "std": 1.0067104623022074
+      },
+      "percentiles": {
+        "p50": 1.013871,
+        "p95": 1.491572,
+        "p99": 1.526396,
+        "p995": 1.531391
+      },
+      "min_ratio": 0.000256,
+      "max_ratio": 1.536947,
+      "mean_ratio": 0.924575
+    }
+  },
+  "note": "Final calibration from all included surveys. R_NULL_99 to be sealed in manifest.py.",
+  "sha256": "d661f933c68a837d3048a04ba4d637a63ebf5a98f12650bbe89ee5207446ef6f"
+}
