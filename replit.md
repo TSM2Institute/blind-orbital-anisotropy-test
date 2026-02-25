@@ -97,11 +97,16 @@ Monte Carlo calibration results (FINAL — 4 surveys, 40,000 realisations):
 DESI subsampling: 1M galaxies per survey (seed=12345), MC-only. Production analysis uses full datasets.
 Subsample files: `attached_assets/DESI_DR1_BGS_MC_SUBSAMPLE.csv`, `attached_assets/DESI_DR1_LRG_MC_SUBSAMPLE.csv`
 
-Test run results (R_NULL_99=None, so all ratio tests FAIL as expected):
-- 6dFGS: |r|=0.061962, ratio=1.5489, rank=#6/51, p=3.31e-78, z-bin=FAIL, orbital=DETECTED on k_hat
-- SDSS: |r|=0.082708, ratio=1.4655, rank=#5/51, p=2.03e-05, z-bin=FAIL, orbital=NOT DETECTED
-- Overall: FAIL (0 of 2, required 2)
-- Saved to: `boat/results/boat_results_test_dev_v2.0.json`
+PRODUCTION RUN RESULTS (sealed R_NULL_99 = 1.541144):
+- 6dFGS: |r|=0.061962, ratio=1.5489, rank=#6/51, p=3.31e-78, ratio=PASS, rank=FAIL, z-bin=FAIL, orbital=DETECTED on k_hat
+- SDSS: |r|=0.082708, ratio=1.4655, rank=#5/51, p=2.03e-05, ratio=FAIL, rank=FAIL, z-bin=FAIL, orbital=NOT DETECTED
+- DESI BGS: |r|=0.002017, ratio=0.5313, rank=#36/51, p=2.10e-04, ratio=FAIL, rank=FAIL, z-bin=FAIL, orbital=DETECTED on r_hat
+- DESI LRG: |r|=0.022315, ratio=1.0616, rank=#27/51, p=1.12e-205, ratio=FAIL, rank=FAIL, z-bin=PASS, orbital=DETECTED on r_hat
+- Overall: **FAIL** (0 of 4 passed, 3 required)
+- Orbital discriminator: DETECTED in 3 of 4 surveys (6dFGS, DESI BGS, DESI LRG)
+- Total runtime: 6,494s (~1.8 hours)
+- Results JSON SHA-256: c841dc850e34fb6a4d5ec46e8229f59109d0fb8d64c4520cbecd665edb684315
+- Saved to: `boat/results/boat_results_production_v2.0.json`
 
 ### Critical Errors to Avoid (from v1.1 lessons)
 
